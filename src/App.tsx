@@ -1,9 +1,11 @@
+import { Card } from "./Card"
+
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline font-outfit text-purple">
-        World Scramble
-      </h1>
+      <main className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-purple to-pink">
+          <Card />
+      </main>
     </>
   )
 }
