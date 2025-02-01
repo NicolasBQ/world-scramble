@@ -25,7 +25,6 @@ function App() {
     const wordArr = randWord.split('');
 
     for(let i = wordArr.length - 1; i >= 0; i--) {
-      console.log(randWord[i]);
       const randPosition = Math.floor(Math.random() * i);
       const temp = wordArr[randPosition];
       wordArr[randPosition] = wordArr[i];
@@ -33,6 +32,10 @@ function App() {
     }
 
     setWord(wordArr.join(''));
+  }
+
+  const reset = () => {
+    console.log('reset');
   }
 
   useEffect(() => { 
@@ -57,10 +60,10 @@ function App() {
             <UserInput word={word}/>
 
             <div className="mt-8 flex justify-center gap-2">
-                <Button>
+                <Button eventFunction={selectWord}>
                     Random
                 </Button>
-                <Button>
+                <Button eventFunction={reset}>
                     Reset
                 </Button>
             </div>
