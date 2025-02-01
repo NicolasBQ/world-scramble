@@ -21,7 +21,8 @@ export default {
         'button': '0px 5px 0px 0px #672171'
       },
       letterSpacing: {
-        'custom': '1rem'
+        'custom': '1rem',
+        'small': '0.5rem',
       }
     },
     fontFamily: {
