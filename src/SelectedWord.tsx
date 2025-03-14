@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface selectedWordProps {
     word: Array<string>
 }
@@ -16,11 +18,17 @@ const shuffleWord = (word: Array<string>) => {
 }
 
 const SelectedWord = ({ word }: selectedWordProps) => {
+    const [joinedWord, setJoinedWord] = useState<string>('');
+
+    useEffect(() => {
+        setJoinedWord(shuffleWord(word).join(''));
+    }, [word])
+
     return (
         <div className="w-full py-5 px-3 mt-8 bg-dark-grey text-center shadow-custom rounded">
-            <p className="text-xl md:text-3xl text-white truncate font-outfit tracking-custom text-center">{shuffleWord(word).join('')}</p>
+            <p className="text-xl md:text-3xl text-white truncate font-outfit tracking-custom text-center">{joinedWord}</p>
             {
-                word.length > 9 && <p className="text-grey text-md tracking-small md:hidden">({shuffleWord(word).join('')})</p>
+                word.length > 9 && <p className="text-grey text-md tracking-small md:hidden">({joinedWord})</p>
             }
         </div>
     )

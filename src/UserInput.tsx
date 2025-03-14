@@ -2,12 +2,15 @@ import React, { useRef, useState } from "react"
 
 interface userInputProps {
     word: Array<string>,
-    checkWord: (userInput: Array<string>) => void
+    checkWord: (userInput: Array<string>) => boolean,
+    handleWin: () => void,
+    handleLose: (userInput: Array<string>) => void
 }
 
-const UserInput = ({ word, checkWord }: userInputProps) => {
+const UserInput = ({ word, checkWord, handleWin, handleLose }: userInputProps) => {
     const [inputValues, setInputValues] = useState<Array<string>>(Array(word.length).fill(''));
     const inputRef = useRef<Array<HTMLInputElement | null>>([]);
+    const checkRef = useRef<boolean>(false);
 
     const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>,index: number) => {
         if(event.key === 'Backspace') {
@@ -16,7 +19,8 @@ const UserInput = ({ word, checkWord }: userInputProps) => {
             inputRef.current[index + 1]?.focus();
         } else {
             // Go and check if the word is correct
-            checkWord(inputValues);
+            checkRef.current = checkWord(inputValues);
+            checkRef.current ? handleWin() : handleLose(inputValues);
         }
     }
 

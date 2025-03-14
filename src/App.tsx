@@ -17,6 +17,7 @@ const WORDS = [
 
 function App() {
   const [word, setWord] = useState<Array<string>>([]);
+  const [mistakes, setMistakes] = useState<Array<string>>([]);
   
   const selectWord = () => {
     const randWord = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -25,10 +26,25 @@ function App() {
     setWord(wordArr);
   }
 
-  const checkWord = (userInput: Array<string>) => {
-    console.log('Checking the word');
-    console.log(word);
-    console.log(userInput);
+  const checkWord = (userInput: Array<string>): boolean => {
+    if (userInput.join('') === word.join('')) return true;
+    return false;
+  }
+
+  const handleWin = () => {
+    console.log('win'); 
+    setMistakes([]);
+  }
+
+  const handleLose = (userInput: Array<string>) => {
+    const newMistakes = [];
+    for(let i in word) {
+      if(word[i] !== userInput[i]) {
+        console.log(userInput[i]);
+        newMistakes.push(userInput[i]);
+        setMistakes(newMistakes);
+      }
+    }
   }
 
   const reset = () => {
@@ -52,10 +68,17 @@ function App() {
 
             <div className="flex flex-col gap-2 md:flex-row justify-between mt-8">
                 <Tries />
-                <Mistakes />
+                <Mistakes 
+                  mistakes={mistakes}
+                />
             </div>
 
-            <UserInput word={word} checkWord={checkWord}/>
+            <UserInput 
+              word={word} 
+              checkWord={checkWord}
+              handleWin={handleWin}
+              handleLose={handleLose}
+            />
 
             <div className="mt-8 flex justify-center gap-2">
                 <Button eventFunction={selectWord}>
