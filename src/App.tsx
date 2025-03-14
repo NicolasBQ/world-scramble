@@ -16,22 +16,19 @@ const WORDS = [
 ];
 
 function App() {
-  const [word, setWord] = useState('');
-
+  const [word, setWord] = useState<Array<string>>([]);
+  
   const selectWord = () => {
-    // Select a random word form the array
     const randWord = WORDS[Math.floor(Math.random() * WORDS.length)];
-    // Knuth Shuffle algorithm to shuffle the word
     const wordArr = randWord.split('');
+    console.log(wordArr);
+    setWord(wordArr);
+  }
 
-    for(let i = wordArr.length - 1; i >= 0; i--) {
-      const randPosition = Math.floor(Math.random() * i);
-      const temp = wordArr[randPosition];
-      wordArr[randPosition] = wordArr[i];
-      wordArr[i] = temp;
-    }
-
-    setWord(wordArr.join(''));
+  const checkWord = (userInput: Array<string>) => {
+    console.log('Checking the word');
+    console.log(word);
+    console.log(userInput);
   }
 
   const reset = () => {
@@ -42,6 +39,7 @@ function App() {
     selectWord();
   }, [])
 
+
   return (
     <>
       <main className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-purple to-pink">
@@ -50,14 +48,14 @@ function App() {
               World Scramblle
             </h1>
 
-            <SelectedWord word={word}/>
+            <SelectedWord word={word} />
 
             <div className="flex flex-col gap-2 md:flex-row justify-between mt-8">
                 <Tries />
                 <Mistakes />
             </div>
 
-            <UserInput word={word}/>
+            <UserInput word={word} checkWord={checkWord}/>
 
             <div className="mt-8 flex justify-center gap-2">
                 <Button eventFunction={selectWord}>
